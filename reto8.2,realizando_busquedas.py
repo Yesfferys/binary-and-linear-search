@@ -3,43 +3,44 @@ import string
 import random
 import os
 
+def create_census_file():
+	if not os.path.exists("census.txt"):
+		with open ("census.txt","w",encoding="UTF-8") as census:
+			
+			alphabet=string.ascii_lowercase
+			quantity=1_000
 
-if not os.path.exists("census.txt"):
-	with open ("census.txt","w",encoding="UTF-8") as census:
-		
-		alphabet=string.ascii_lowercase
-		quantity=1_000
+			count_census=0
+			number=0 
+			for i in range(quantity):
+				increase=random.randint(1,2)
+				number+=increase
 
-		count_census=0
-		number=0 
-		for i in range(quantity):
-			increase=random.randint(1,2)
-			number+=increase
+				letters=random.sample(alphabet,5) 							
+				name="".join(letters)
 
-			letters=random.sample(alphabet,5) 							
-			name="".join(letters)
+				age=random.randint(18,99)   								
 
-			age=random.randint(18,99)   								
+				tax=random.choice((True,True,True,False)) 				
 
-			tax=random.choice((True,True,True,False)) 				
+				count_census+=1
 
-			count_census+=1
+				if count_census % (quantity/10) == 0:
+					print("have been created: ",count_census," census")
 
-			if count_census % (quantity/10) == 0:
-				print("have been created: ",count_census," census")
+				census.write(f"{number},{name},{age},{tax}\n")
+			
 
-			census.write(f"{number},{name},{age},{tax}\n")
-		
+def read_cesus_file():
+	with open ("census.txt","r",encoding="UTF-8") as census:
+		text_list=census.readlines()
+	return text_list
 
-
-with open ("census.txt","r",encoding="UTF-8") as census:
-	text_list=census.readlines()							
-	
+def text_formated(text_list):
 	text_formatted=[]										
 	for element in text_list:
 		line=element.strip()					
 		text_formatted.append(line)
-
 
 	text_list_str=[]										
 	for element in text_formatted:
@@ -155,6 +156,10 @@ def lineal_search(list_find,find):
 
 ####################################		program flow		#####################################
 
+census=create_census_file()
+text_list=read_cesus_file()
+text_list_float=text_formated(text_list)
+
 activate=True
 while activate:
 	presentation()
@@ -186,7 +191,7 @@ while activate:
 					print("Enter only numbers,you have ",counter," attempts left")
 					
 		if counter==0:
-			print("attempts have been exhausted")
+			print("Attempts have been exhausted")
 			continuar=input("Press ENTER to start again")
 			os.system("cls")
 			continue
