@@ -4,84 +4,83 @@ import random
 import os
 
 
-if not os.path.exists("censo.txt"):
-	with open ("censo.txt","w",encoding="UTF-8") as censo:
+if not os.path.exists("census.txt"):
+	with open ("census.txt","w",encoding="UTF-8") as census:
 		
-		alfabeto=string.ascii_lowercase
-		cantidad=1_000
+		alphabet=string.ascii_lowercase
+		quantity=1_000
 
-		conteo_censo=0
-		numero=0 
-		for i in range(cantidad):
-			aumento=random.randint(1,2)
-			numero+=aumento
+		count_census=0
+		number=0 
+		for i in range(quantity):
+			increase=random.randint(1,2)
+			number+=increase
 
-			letras=random.sample(alfabeto,5) 							
-			nombre="".join(letras)
+			letters=random.sample(alphabet,5) 							
+			name="".join(letters)
 
-			edad=random.randint(18,99)   								
+			age=random.randint(18,99)   								
 
-			impuesto=random.choice((True,True,True,False)) 				
+			tax=random.choice((True,True,True,False)) 				
 
-			conteo_censo+=1
+			count_census+=1
 
-			if conteo_censo % (cantidad/10) == 0:
-				print("Se han creado: ",conteo_censo," censos")
+			if count_census % (quantity/10) == 0:
+				print("have been created: ",count_census," census")
 
-			censo.write(f"{numero},{nombre},{edad},{impuesto}\n")
+			census.write(f"{number},{name},{age},{tax}\n")
 		
 
 
-with open ("censo.txt","r",encoding="UTF-8") as censo:
-	texto_lista=censo.readlines()							
+with open ("census.txt","r",encoding="UTF-8") as census:
+	text_list=census.readlines()							
 	
-	texto_formateado=[]										
-	for elemento in texto_lista:
-		linea=elemento.strip()					
-		texto_formateado.append(linea)
+	text_formatted=[]										
+	for element in text_list:
+		line=element.strip()					
+		text_formatted.append(line)
 
 
-	texto_lista_str=[]										
-	for elemento in texto_formateado:
-		linea2=elemento.split(",")
-		texto_lista_str.append(linea2)
+	text_list_str=[]										
+	for element in text_formatted:
+		line2=element.split(",")
+		text_list_str.append(line2)
 
-	texto_lista_float=[]									
-	for elemento in texto_lista_str:
-		if elemento != [""]:
-			elemento[0]=int(elemento[0])
-			elemento[2]=int(elemento[2])
-			texto_lista_float.append(elemento)
+	text_list_float=[]									
+	for element in text_list_str:
+		if element != [""]:
+			element[0]=int(element[0])
+			element[2]=int(element[2])
+			text_list_float.append(element)
 
 
-
-def validar_opciones():
+def validate_options():
 	"""
 	Allow counting the options input by the user and limit them to one defined quantity. 
 	Do not accept any parameters as arguments, and return the input number
 	"""
-	conteo=3
-	while conteo >0:
+	count=3
+	while count >0:
 		try:
-			print(f'Tienes ',conteo,' oportunidades para seleccionar')
-			numero=int(input("Introduce un numero de la lista (1,2,3): ----> "))
+			print(f'You have ',count,' oportunities to select')
+			number=int(input("Enter number from the list (1,2,3): ----> "))
 		except BaseException:
-			print("No has introducido un numero entero")
-			conteo-=1
+			print("you have not entered an integer number")
+			count-=1
 		else: 
-			if numero <=3 and numero!=0:
-				return numero
+			if number <=3 and number!=0:
+				return number
 			else:
-				conteo-=1
+				count-=1
 		finally:
-			if conteo==0:
-				print("No tienes mas oportunidades")
+			if count==0:
+				print("you have not more opportunities")
 				os.system("cls")
 				break
 		
 
 
-def presentacion():
+def presentation():
 	"""
 	Allow displaying the options selected by the user without accepting any parameters as arguments.
 	"""
@@ -92,133 +91,133 @@ def presentacion():
 	print("2. Buscar por nombre")
 	print("3. Salir")
 
-def continuar():
+def continue_program():
 	"""
 	Reduce the code when interacting with the user, without accepting any parameters as arguments."
 	"""
-	continuar=input("Presione ENTER para continuar")
+	continue_program=input("Presione ENTER para continuar")
 	os.system("cls")
 
 
-def busqueda_binaria_numero(lista,buscar):
+def binary_search_number(list_find,find):
 	"""
 	Allow finding a number and counting the times it appears in the record through the asymptotic notation 
 	O(log n), along with its position. It accepts a list and an element to search for as parameters
 	"""
-	inicio=0
-	fin=len(lista)-1
-	contador=0
+	start=0
+	end=len(list_find)-1
+	counter=0
 
-	while inicio <= fin:								
-		medio=(inicio+fin)//2						
+	while start <= end:								
+		middle=(start+end)//2						
 		
-		if lista[medio][0]==buscar:
-			contador+=1
+		if list_find[middle][0]==find:
+			counter+=1
 
-			izquierda=medio-1
-			while  izquierda>=0 and buscar==lista[izquierda][0]:
-				contador+=1
-				izquierda-=1
+			left=middle-1
+			while  left>=0 and find==list_find[left][0]:
+				counter+=1
+				left-=1
 
-			derecha=medio+1
-			while derecha<=len(lista)-1 and buscar==lista[derecha][0]:
-				contador+=1
-				derecha+=1
+			right=middle+1
+			while right<=len(list_find)-1 and find==list_find[right][0]:
+				counter+=1
+				right+=1
 			
-			return True,medio,contador
+			return True,middle,counter
 
-		elif buscar>lista[medio][0]:
-			inicio=medio+1 							
+		elif find>list_find[middle][0]:
+			start=middle+1 							
 		
-		elif buscar<lista[medio][0]:
-			fin=medio-1
+		elif find<list_find[middle][0]:
+			end=middle-1
 
 			
-	return False,"sin posicion",contador
+	return False,"without position",counter
 
 
-def busqueda_lineal(lista,buscar):
+def lineal_search(list_find,find):
 	"""
-	Busqueda lineal O(n)
+	lineal_search O(n)
 	"""
-	posiciones_encontradas=[]
-	contador=0
-	for i in range(0,len(lista)):
-		if lista[i][1] == buscar:
-			posiciones_encontradas.append(i)
-			contador+=1
-	if posiciones_encontradas!=[]:
-		return True,posiciones_encontradas,contador
+	found_positions=[]
+	counter=0
+	for i in range(0,len(list_find)):
+		if list_find[i][1] == find:
+			found_positions.append(i)
+			counter+=1
+	if found_positions!=[]:
+		return True,found_positions,counter
 
-	return False,"sin posicion","sin conteo"
+	return False,"without positions","without counter"
 
 
 
-####################################		flujo del programa		#####################################
+####################################		program flow		#####################################
 
-activar=True
-while activar:
-	presentacion()
+activate=True
+while activate:
+	presentation()
 	print()
-	opcion=validar_opciones()
+	option=validate_options()
 
-	if opcion==1:
-		print("Vamos a buscar por numero")
+	if option==1:
+		print("let's search by number")
 		print()
-		conteo=3
-		while conteo>=1:
-			numero=input("porfavor introduce el numero a buscar en el censo: ")
-			if numero.isdigit() == True:
-				numero=int(numero)
+		counter=3
+		while counter>=1:
+			number=input("Please, Enter the number by find for in the census: ")
+			if number.isdigit() == True:
+				number=int(number)
 
-				encontrado,posicion,contador=busqueda_binaria_numero(texto_lista_float,numero)
-				if encontrado == True:
-					print("Encontrado el",numero," ",contador, " veces, en la posicion: ", posicion)
-					continuar()
+				found,position,counter=binary_search_number(text_list_float,number)
+				if found == True:
+					print("Found the ",number," ",counter, " times, in the position: ", position)
+					continue_program()
 					break
-				elif encontrado == False:
-					print("No encontrado")
-					continuar()
+				elif found == False:
+					print("Not found")
+					continue_program()
 					break
 
 			else:
-				if conteo>=1:
-					conteo-=1
-					print("Introduce solo numeros,Te quedan ",conteo," intentos")
+				if counter>=1:
+					counter-=1
+					print("Enter only numbers,you have ",counter," attempts left")
 					
-		if conteo==0:
-			print("Se acabaron los intentos")
-			continuar=input("Presione ENTER para volver a empezar")
+		if counter==0:
+			print("attempts have been exhausted")
+			continuar=input("Press ENTER to start again")
 			os.system("cls")
 			continue
 		
-	elif opcion==2:
-		print("Vamos a buscar por nombre")
+	elif option==2:
+		print("let's search by name")
 		print()
-		conteo=3
-		while conteo>=1:
-			nombre=input("porfavor introduce el NOMBRE a buscar en el censo: ")
-			if nombre.isalpha() == True:
+		counter=3
+		while counter>=1:
+			name=input("Please,enter only name to find from the census: ")
+			if name.isalpha() == True:
 
-				encontrado,posicion,contador=busqueda_lineal(texto_lista_float,nombre)
-				if encontrado == True:
-					print("Encontrado el nombre ",nombre," en la posicion: ", *posicion," , ", contador , " veces")
-					continuar()
+				found,position,counter=lineal_search(text_list_float,name)
+				if found == True:
+					print("Name: ",name,", found in the position: ", *position," , ", counter , " times")
+					continue_program()
 					break
-				elif encontrado == False:
-					print("No encontrado")
-					continuar()
+				elif found== False:
+					print("Not found")
+					continue_program()
 					break
 
 			else:
-				if conteo>=1:
-					conteo-=1
-					print("Introduce solo letras,Te quedan ",conteo," intentos")
+				if counter>=1:
+					counter-=1
+					print("Enter only letters,you have only",counter," attempts left")
 
 
-	elif opcion==3:
-		print("Fin del programa")
-		continuar()
+	elif option==3:
+		print("End of program")
+		continue_program()
 		break
 
 	os.system("cls")
